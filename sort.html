@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <script>
+        // sort function is used to sort the array
+
+        const arr = [4,2,1,6,0];
+        arr.sort();
+        arr.forEach(fun);
+        function fun(i)
+        {
+            console.log(i);
+        }
+
+        //filter function
+
+        const num = [32, 33, 16, 40];
+        const result = num.filter(check);
+
+        function check(i) {
+        return i >= 18;
+        }
+        result.forEach(fun1);
+        function fun1(j)
+        {
+            console.log(j);
+        }
+
+       
+
+    </script>
+</body>
+</html>

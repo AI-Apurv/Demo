@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //var variable can be updated as well as redeclared
+        //let variable can be updated but not redeclared
+        var a =10 ;
+        a = 15 ;
+        var a = 20 ;
+        console.log(a);
+
+        let b = 10 ;
+        b =15 ;
+       console.log(b);
+  //   let b = 20 ;
+
+       // varible defined with const can not be redeclared  and reassigned 
+       const z = 10;
+       console.log(z);
+
+
+
+
+       // var varible are globally scoped or locally scoped 
+       
+
+       var a = 1 ;
+       function newFunction()
+       {
+        var b = 10 ;
+        console.log(b);
+        console.log(a);
+       }
+       console.log(a);
+       console.log(b);
+       newFunction();
+
+       // let and const is block scoped
+       // the user need to initialise const variable at the time of declaration otherwise it returns an error 
+
+       let hi = 1 ;
+       let hello = 10 ;
+       if(hello>5)
+       {
+          let hi = 15 ;
+          console.log(hi);
+       }
+        console.log(hi);
+    
+
+       
+
+        
+    </script>
+</body>
+</html>

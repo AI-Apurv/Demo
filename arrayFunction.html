@@ -44,6 +44,19 @@
         {
             console.log(newArr[k]);
         }
+
+
+
+        // reduce function
+
+        const message = ["Hello ","world! ","learning ", "js ", "concept"];
+
+        function concatenateString(accumulator, currentValue) {
+        return accumulator + currentValue;
+        }
+
+        let joinedString = message.reduce(concatenateString);
+        console.log(joinedString);
         
 
        

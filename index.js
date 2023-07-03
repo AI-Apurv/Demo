@@ -1,12 +1,12 @@
 const express = require('express');
 const index = express();
 const port = 7000;
-index.post('/', (req, res)=>{
+index.get('/', (req, res)=>{
     res.status(200);
     res.send("Welcome to root URL of Server");
 });
 
-index.post('/add/:num1/:num2', function (req, res) {
+index.get('/add/:num1/:num2', function (req, res) {
     var num1 =0 
     num1 = parseInt(req.params.num1)
     var num2 =0 
@@ -16,7 +16,7 @@ index.post('/add/:num1/:num2', function (req, res) {
     res.send(sum)
 })
 
-index.post('/subtract/:num1/:num2', function (req, res) {
+index.get('/subtract/:num1/:num2', function (req, res) {
     var num1 =0 
     num1 = parseInt(req.params.num1)
     var num2 =0 
@@ -26,7 +26,7 @@ index.post('/subtract/:num1/:num2', function (req, res) {
     res.send(subtract)
 })
 
-index.post('/multiply/:num1/:num2', function (req, res) {
+index.get('/multiply/:num1/:num2', function (req, res) {
     var num1 =0 
     num1 = parseInt(req.params.num1)
     var num2 =0 
@@ -36,7 +36,7 @@ index.post('/multiply/:num1/:num2', function (req, res) {
     res.send(multiply)
 })
 
-index.post('/divide/:num1/:num2', function (req, res) {
+index.get('/divide/:num1/:num2', function (req, res) {
     var num1 =0 
     num1 = parseInt(req.params.num1)
     var num2 =0 

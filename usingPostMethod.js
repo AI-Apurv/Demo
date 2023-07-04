@@ -8,7 +8,7 @@ app.post('/add',(req, res)=>
     var num1 = req.body.a ;
     var num2 = req.body.b ;
     var sum = num1 + num2 ;
-    console.log(sum);
+    
     res.send(`Sum is ${sum}`);
 })
 

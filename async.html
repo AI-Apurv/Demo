@@ -7,11 +7,18 @@
 </head>
 <body>
     <script>
-        console.log("a")
+        console.log("First line of code ")
         setTimeout(() => {
-            console.log("b")
+            console.log("Print after 3 sec")
         }, 3000);
-        console.log("c");
+        setTimeout(() => {
+            console.log("Print after 1 sec")
+        }, 1000);
+        setTimeout(() => {
+            console.log("Print after 2 sec")
+        }, 2000);
+
+        console.log("Last line of code ");
     </script>
 </body>
 </html>

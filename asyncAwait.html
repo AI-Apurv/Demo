@@ -7,42 +7,71 @@
 </head>
 <body>
     <script>
-        async function performAsyncOperation() {
-    
-        const result1 = await asyncOperation1();
-        console.log(result1);
-        
-        const result2 = await asyncOperation2(result1);
-        console.log(result2);
-        
-        const result3 = await asyncOperation3(result2);
-        console.log(result3);
-        
+//       Run in an asynchronous manner
+/* 
+   async function asyncOperations() {
+   await new Promise(resolve => {
+    setTimeout(() => {
+      console.log("Async operation 1 completed");
+      console.log("completed after 2 sec")
+      resolve();
+    }, 2000);
+  });
 
-        } 
+   await new Promise(resolve => {
+    setTimeout(() => {
+      console.log("Async operation 2 completed");
+      console.log("completed after 1 sec")
+      resolve();
+    }, 1000);
+  });
 
+  await  new Promise(resolve => {
+    setTimeout(() => {
+      console.log("Async operation 3 completed");
+      console.log("completed after 3 sec")
+      resolve();
+    }, 3000);
+  });
 
+  console.log("All async operations completed");
+}
 
-        function asyncOperation1() {
-        return new Promise((resolve) => {
-            setTimeout(() => resolve('Async Operation 1'), 1000);
-        });
-        }
+asyncOperations();
 
-        function asyncOperation2(previousResult) {
-        return new Promise((resolve) => {
-            setTimeout(() => resolve(`Async Operation 2 using ${previousResult}`), 1000);
-        });
-        }
+*/      
+ 
+ // Run in an synchronous manner
+ 
+   async function asyncOperations() {
+   new Promise(resolve => {
+    setTimeout(() => {
+      console.log("Async operation 1 completed");
+      console.log("completed after 2 sec")
+      resolve();
+    }, 2000);
+  });
 
-        function asyncOperation3(previousResult) {
-        return new Promise((resolve) => {
-            setTimeout(() => resolve(`Async Operation 3 using ${previousResult}`), 1000);
-        });
-        }
+   new Promise(resolve => {
+    setTimeout(() => {
+      console.log("Async operation 2 completed");
+      console.log("completed after 1 sec")
+      resolve();
+    }, 1000);
+  });
 
+   new Promise(resolve => {
+    setTimeout(() => {
+      console.log("Async operation 3 completed");
+      console.log("completed after 3 sec")
+      resolve();
+    }, 3000);
+  });
 
-         performAsyncOperation();
+  console.log("All async operations completed");
+}
+
+asyncOperations();
 
 
     </script>

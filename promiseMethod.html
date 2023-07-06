@@ -7,16 +7,26 @@
 </head>
 <body>
     <script>
-        function demo() {
-        console.log("Function called!!")
-        return Promise.resolve("Success");
+        const promise = new Promise((resolve, reject) => {
+  
+        const result = Math.random();
+        if (result > 0.5) {
+            resolve(result);
+        } else {
+            reject(new Error('Result is less than 0.5'));
+        }
+        });
 
-    }
-        demo().then(
-            (message) => {
-                console.log("Then success:" + message);
-            }
-)
+        promise
+        .then((result) => {
+            console.log(`Result is ${result}`);
+        })
+        .catch((error) => {
+            console.error(error);
+        })
+        .finally(() => {
+            console.log('Promise is settled');
+        });
 
     </script>
 </body>

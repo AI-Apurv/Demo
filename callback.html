@@ -9,14 +9,14 @@
     <script>
     function greet(name, fun) {
         console.log('Hello' + ' ' + name);
-        fun();
         setTimeout(() => {
             console.log("Waiting")
         }, 3000);
+        fun();
     }
     
     function fun() {
-        console.log('Callback function');
+        console.log('This is a Callback function');
     }
  
     greet('World !', fun);

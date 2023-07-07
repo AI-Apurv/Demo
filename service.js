@@ -11,17 +11,17 @@ router.get('/service/login',(req,res)=>
     res.send("this is login page")
 })
 
-router.get('/service/login/home',(req,res)=>
+router.get('/home',(req,res)=>
 {
     res.send("this is home page")
 })
 
-router.get('/service/login/home/settings',(req,res)=>
+router.get('/settings',(req,res)=>
 {
     res.send("this is settings page")
 })
 
-router.get('/service/login/home/settings/logout',(req,res)=>
+router.get('/logout',(req,res)=>
 {
     res.send("this is logout page")
 })

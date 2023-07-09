@@ -1,23 +1,85 @@
-const fs = require('fs')
-const express = require('express')
+const express = require("express");
+const bodyParser = require('body-parser');
+const fs = require('fs');
+const path = require('path');
+const multer = require('multer');
+
 const app = express();
-const multer = require('multer')
-//const path = require('path')
+app.use(bodyParser.json());
 
+// file uploading
+const upload = multer({
+    storage: multer.diskStorage({ destination: function(req, file, cb){
+            cb(null, 'uploads');
+        },
+        filename: function(req, file, cb){
+            cb(null,`file${file.fieldname}.txt`)
+        }
+    })
+} ).any();
+app.post("/upload",upload, (req, res) => {
+    res.send("file uploaded")
+});
 
-const upload = multer({dest:'upload/'})
+// file merge 
+app.post("/merge", (req, res) => {
+    const { f1, f2} =req.body;
+    const path1 = "/home/appinventiv/Desktop/file_system/uploads/"+f1;
+    const path2 = "/home/appinventiv/Desktop/file_system/uploads/"+f2;
+    const f3 = `abc_${Date.now()}.txt`
+    const path3 = "/home/appinventiv/Desktop/file_system/backup/"+f3;
+    fs.readFile(path1, 'utf8', (err, data1) => {
+        if (err) {
+          console.error(err);
+          return;
+        }
+        console.log("Data 1 copied")
+        fs.writeFile(path3,data1,(err) => {
+            if (err) {
+                console.error(err);
+                return;
+            }
+        })
+    });
+    fs.readFile(path2, 'utf8', (err, data2) => {
+        if (err) {
+          console.error(err);
+          return;
+        }
+        console.log("Data 2 copied")
+        fs.appendFile(path3,data2,(err) => {
+            if (err) {
+                console.error(err);
+                return;
+            }
+        })
+    });
+    res.send("Merged data saved in  backup")
+});
 
-app.use(express.urlencoded({extended:false}))
-
-app.get('/',(req,res)=>{
-    return res.send('<form action="/upload" method="POST" enctype="multipart/form-data"><input type="file"name="Textfile"><button type="submit">upload</button></form>')
+// file read 
+app.post('/read', (req,res) => {
+    const { f1 } =req.body;
+    const path1 = "/home/appinventiv/Desktop/file_system/backup/"+f1;
+    fs.readFile(path1, 'utf8', (err, data) => {
+        if (err) {
+          console.error(err);
+          return;
+        }
+        console.log("Data read");
+        res.send(data);
+    });
 })
-app.post('/upload',upload.single('Textfile'),(req,res)=>{
-    console.log(req.body);
-    console.log(req.file);
-    return res.redirect('/')
+
+// file delete 
+app.delete('/delete', (req,res) => {
+    const { f1 } =req.body;
+    const path1 = "/home/appinventiv/Desktop/file_system/uploads/"+f1;
+    fs.unlink(path1, (data) => {
+        console.log("File deleted");
+        res.send(data);
+    });
+    res.status(200).send("File ")
 })
-    
-app.listen(3000,()=>{
-    console.log("server connected")
-})
+
+app.listen(3000);

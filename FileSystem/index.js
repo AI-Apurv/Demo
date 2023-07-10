@@ -24,10 +24,10 @@ app.post("/upload",upload, (req, res) => {
 // file merge 
 app.post("/merge", (req, res) => {
     const { f1, f2} =req.body;
-    const path1 = "/home/appinventiv/Desktop/file_system/uploads/"+f1;
-    const path2 = "/home/appinventiv/Desktop/file_system/uploads/"+f2;
+    const path1 = "/home/admin2/Desktop/fileSystem/uploads/"+f1;
+    const path2 = "/home/admin2/Desktop/fileSystem/uploads/"+f2;
     const f3 = `abc_${Date.now()}.txt`
-    const path3 = "/home/appinventiv/Desktop/file_system/backup/"+f3;
+    const path3 = "/home/admin2/Desktop/fileSystem/backup/"+f3;
     fs.readFile(path1, 'utf8', (err, data1) => {
         if (err) {
           console.error(err);
@@ -57,10 +57,10 @@ app.post("/merge", (req, res) => {
     res.send("Merged data saved in  backup")
 });
 
-// file read 
+// file read
 app.post('/read', (req,res) => {
     const { f1 } =req.body;
-    const path1 = "/home/appinventiv/Desktop/file_system/backup/"+f1;
+    const path1 = "/home/admin2/Desktop/fileSystem/backup/"+f1;
     fs.readFile(path1, 'utf8', (err, data) => {
         if (err) {
           console.error(err);
@@ -71,15 +71,21 @@ app.post('/read', (req,res) => {
     });
 })
 
+
+
 // file delete 
-app.delete('/delete', (req,res) => {
+app.post('/delete', (req,res) => {
     const { f1 } =req.body;
-    const path1 = "/home/appinventiv/Desktop/file_system/uploads/"+f1;
+    const path1 = "/home/admin2/Desktop/fileSystem/uploads/"+f1;
     fs.unlink(path1, (data) => {
-        console.log("File deleted");
+       // console.log("File deleted");
         res.send(data);
     });
-    res.status(200).send("File ")
+    res.status(200).send("File deleted")
 })
 
-app.listen(3000);
+
+
+app.listen(3000,()=>{
+    console.log("Running");
+});

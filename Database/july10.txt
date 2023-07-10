@@ -1,0 +1,43 @@
+--CREATE TABLE cities (
+--- city VARCHAR(10),
+-- country VARCHAR(10),
+-- population INTEGER ,
+-- area INTEGER
+--);
+--INSERT INTO
+--cities (city, country, population, area)
+--VALUES
+--('Tokyo', 'Japan', 13515271, 2191),
+--('Delhi', 'India', 16753235, 2191),
+--('Shanghai', 'China', 24870895, 6341),
+--('Sao Paulo', 'Brazil', 21650000, 1521),
+--('Mexico', 'Mexico', 9209944, 1485),
+--('Cairo', 'Egypt', 9500000, 3085),
+--('Mumbai', 'India', 12478447, 603),
+--('Beijing', 'China', 21893095, 16411),
+--('Dhaka', 'Bangladesh', 8906039, 338),
+--('Osaka', 'Japan', 2725006, 225);
+
+
+--SELECT * FROM cities WHERE area > 2000;
+
+--SELECT COUNT(*) FROM cities ;
+
+--SELECT country || ', ' || population/area AS name_density FROM cities ;
+
+--SELECT CONCAT(country,', ' , city ) AS name_country FROM cities ;
+
+--SELECT UPPER(CONCAT(country, ', ' , city)) AS name_country FROM cities ;
+
+
+--SELECT LOWER(CONCAT(country, ', ' , city)) AS name_country FROM cities ;
+
+--SELECT INITCAP(CONCAT(country, ', ' , city)) AS name_country FROM cities ;
+
+--SELECT country FROM cities WHERE area BETWEEN 2000 AND 3000 ;
+
+--SELECT country FROM cities WHERE area  > 2000 OR population > 1000000 ;
+
+--SELECT SUBSTRING(country ,1 ,3 ) AS short_name FROM cities ;
+
+--SELECT country , SUM(population) FROM cities GROUP BY country ;

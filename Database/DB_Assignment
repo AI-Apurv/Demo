@@ -1,0 +1,51 @@
+Q1: FInd all the comments for the photo with ID = 3 , along with the username of the comment author 
+
+SELECT c.contents, u.username
+FROM comments c
+JOIN users u ON c.user_id = u.id
+JOIN photos p ON c.photo_id = p.id
+WHERE p.id = 3;
+
+
+Q2:Find the average number of comments per photo
+
+SELECT AVG(comment_count) AS avg_comments_per_photo
+FROM (
+  SELECT COUNT(*) AS comment_count
+  FROM comments
+  GROUP BY photo_id
+) AS comment_counts;
+
+
+Q3:  Find the photo with the most comments attached to it
+
+SELECT p.id, p.url, COUNT(*) AS comment_count
+FROM photos p
+JOIN comments c ON p.id = c.photo_id
+GROUP BY p.id, p.url
+ORDER BY comment_count DESC
+LIMIT 1;
+
+
+Q4: Find the photo with ID = 10 and get the number of comments attached to it
+
+SELECT COUNT(*) AS comment_count
+FROM comments
+WHERE photo_id = 10;
+
+
+Q5: Find the user with the most activity (most comments + most photos)
+
+SELECT u.id, u.username, COUNT(DISTINCT p.id) + COUNT(DISTINCT c.id) AS activity_count
+FROM users u
+LEFT JOIN photos p ON u.id = p.user_id
+LEFT JOIN comments c ON u.id = c.user_id
+GROUP BY u.id, u.username
+ORDER BY activity_count DESC
+LIMIT 1;
+
+
+Q6:Calculate the average number of characters per comment
+
+SELECT AVG(LENGTH(contents)) AS avg_chars_per_comment
+FROM comments;

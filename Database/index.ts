@@ -75,7 +75,7 @@ User.init(
 );
 
 
-
+//room tables 
 Room.init(
   {
     room_id: {
@@ -98,7 +98,7 @@ Room.init(
 );
 
 
-
+//message tables 
 Message.init(
   {
     message_id: {
@@ -139,7 +139,7 @@ app.use(express.json());
 
 
 
-
+//user sign up
 
 app.post('/signup', async (req:Request, res:Response) => {
 
@@ -169,7 +169,7 @@ app.post('/signup', async (req:Request, res:Response) => {
 });
 
 
-
+//sign in 
 
 
 app.post('/signin', async (req: Request, res: Response) => {
@@ -190,6 +190,8 @@ app.post('/signin', async (req: Request, res: Response) => {
 });
 
 
+//create chat 
+
 app.post('/createChat', async (req: Request, res: Response) => {
   try {
     const token = req.body.token || req.query.token || req.headers["authorization"];
@@ -198,19 +200,21 @@ app.post('/createChat', async (req: Request, res: Response) => {
     }
     
     const from_data: any = jwt.verify(token, 'secret');
-    console.log('from_data:', from_data); // Check the from_data object in the console
+    console.log('---------------------------------------------------from_data:', from_data); // Check the from_data object in the console
 
-    const from_id = from_data.id;
+    const from_id = from_data.userId;
     console.log('from_id:', from_id); // Check the from_id value in the console
 
     if (!from_id) {
       return res.status(400).send("Missing 'from_id' parameter");
     }
-
+console.log("line 1 ---------------------------------------------------------")
     const to_id = req.body.to_id;
     if (!to_id) {
       return res.status(400).send("Missing 'to_id' parameter");
     }
+
+    console.log("line 2 ---------------------------------------------------------")
 
     const [room_data]: any = await sequelize.query(`
       SELECT room_id FROM rooms 
@@ -218,7 +222,7 @@ app.post('/createChat', async (req: Request, res: Response) => {
         (participant1_id='${to_id}' AND participant2_id='${from_id}') OR 
         (participant1_id='${from_id}' AND participant2_id='${to_id}')
     `);
-
+    console.log("line 3 ---------------------------------------------------------")
     if (room_data && room_data.length > 0) {
       return res.status(200).send(room_data);
     } else {
@@ -228,7 +232,7 @@ app.post('/createChat', async (req: Request, res: Response) => {
         participant2_id: from_id,
         room_id: new_room_id.substring(0, 8)
       };
-
+      console.log("line 4 ---------------------------------------------------------")
       await Room.create(newRoomObj);
       return res.status(200).send(`${new_room_id} has been created for the participants`);
     }
@@ -239,6 +243,55 @@ app.post('/createChat', async (req: Request, res: Response) => {
 });
 
 
+
+
+
+//delete messages 
+
+
+app.post('/delete',async(req:Request, res:Response)=>{
+
+  try{
+      
+      const {room_id} = req.query;
+      
+      let deleteData = await Message.destroy({
+          where: {
+              room_id:room_id
+          }
+      })
+      
+      res.status(200).send("chat deleted")
+  }catch(e:any){
+      
+      res.status(400).send(e)
+  }
+})
+
+
+
+//fetch result
+
+
+app.post('/fetch',async (req: Request, res: Response) => {
+
+  try{
+      const { page, size } = req.query;
+      const { limit, offset } = getPagination(Number(page), Number(size));
+
+      let messages = await Message.findAndCountAll({ limit,offset})
+      res.status(200).send(messages)
+  }catch(e){
+      res.status(400).send(e);
+  }
+})
+
+const getPagination = (page:any, size:Number) => {
+  const limit = size ?  +(size) : 3;
+  const offset = page ? page * limit : 0;
+
+  return { limit, offset };
+};
 
 
 

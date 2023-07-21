@@ -90,7 +90,11 @@ export const signup = async (req: Request, res: Response) => {
       }
       
       // Create a JSON Web Token (JWT)
-      const token = jwt.sign({ user_name: UserModel.user_name, email: UserModel.email }, 'secretKey');
+      const user_temp = {
+        user_name : user_name ,
+
+      }
+      const token = jwt.sign(user_temp, 'secretKey');
   
       res.status(200).json({ token });
     } catch (err) {

@@ -1,26 +1,23 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
-enum status {
-    accepted = 'accepted',
-    rejected = 'rejected',
-    pending = 'pending'
-}
+const statusEnum = ['accepted', 'rejected', 'pending'];
+
 const FollowerFollowingSchema = new mongoose.Schema({
+  Sender_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'UserModel',
+  },
+  Receiver_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'UserModel',
+  },
+  status: {
+    type: String,
+    enum: statusEnum,
+    default: 'pending', // Optional: Set a default value for the status field if not provided
+  },
+});
 
-    Sender_id : {
-        type : Object,
-        ref : 'UserModel'
-    },
-    Receiver_id : {
-        type : Object,
-        ref : 'UserModel'
-    },
-    status :{
-        type : status
-    }
-  
-})
+const FollowerFollowingModel = mongoose.model('FollowerFollowingModel', FollowerFollowingSchema);
 
-const FollowerFollowingModel = mongoose.model('FollowerFollowingModel',FollowerFollowingSchema)
-
-export {FollowerFollowingModel};
+export { FollowerFollowingModel };

@@ -25,7 +25,7 @@ const PostSchema = new mongoose.Schema({
 
     caption : {
         type : String ,
-       // required: true ,
+        required: true ,
     },
 
     total_likes : {
@@ -38,7 +38,8 @@ const PostSchema = new mongoose.Schema({
     },
     post_url  :
     {
-        type : String
+        type : String ,
+        required : true 
     }
     // hashtags : {
     //     type : hashtags

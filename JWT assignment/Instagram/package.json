@@ -19,6 +19,8 @@
     "joi": "^17.9.2",
     "jsonwebtoken": "^9.0.1",
     "mongoose": "^7.4.0",
+    "redid": "^0.0.0",
+    "redis": "^4.6.7",
     "swagger-jsdoc": "^6.0.0",
     "swagger-ui-express": "^5.0.0"
   },

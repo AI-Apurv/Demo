@@ -3,10 +3,20 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import Joi, { any } from 'joi';
-
+import { SessionModel } from '../Models/sessions.model';
 import { UserModel } from '../Models/user.model';
+import { createClient } from 'redis';
+import redisclient from '../redis/redis.client'
+//import {redisConnect} from 'redis';
 
 
+
+async function redisConnect() {
+  const client = createClient();
+
+  client.on('error', err => console.log('Redis Client Error', err));
+
+}
 
 
 //---------------------------------------------------------signup api ------------------------------------------------------
@@ -39,13 +49,16 @@ export const signup = async (req: Request, res: Response) => {
         })
       
     // Hash the password
-    bcrypt.hash(password, 10, (err, hashedPassword) => {
+    bcrypt.hash(password, 10, async (err, hashedPassword) => {
       if (err) {
         return res.status(500).json({ error: 'Failed to hash password' });
       }
   
       // Create a new user document using the User model
       const newUser = new UserModel({user_name,first_name,last_name,email,bio,profile_pic, password: hashedPassword });
+
+      //stored the registered user in redis
+      await redisclient.set(`user: ${newUser.user_name}`,JSON.stringify(newUser))
   
       // Save the user document to the database
       newUser
@@ -95,6 +108,10 @@ export const signup = async (req: Request, res: Response) => {
 
       }
       const token = jwt.sign(user_temp, 'secretKey');
+      
+      //Store the login token and status in redis
+      await redisclient.set(`token:${user_temp}`,token)
+      await redisclient.set(`status:${user_temp}`,'true')
   
       res.status(200).json({ token });
     } catch (err) {
@@ -102,7 +119,53 @@ export const signup = async (req: Request, res: Response) => {
     }
   };
 
-
+  // export const login = async (req: Request, res: Response) => {
+  //   const { email, password } = req.body;
+  //   const client = createClient();
+  //   client.connect();
+  //   try {
+  //     redisConnect();
+  //     console.log("redis connected");
+  //   }
+    
+  //   catch (err) { console.log(err); }
+  //   UserModel.findOne({ email })
+  //     .then((user:any) => {
+  //       if (!user) {
+  //         return res.status(401).json({ error: 'Authentication failed' });
+  //       }
+  //       bcrypt.compare(password, user.password, async (err, result) => {
+  //         if (err || !result) {
+  //           return res.status(401).json({ error: 'Authentication failed' });
+  //         }
+  //         const token = jwt.sign({ userId: user._id }, '8765');
+  
+  //         // res.status(200).json({ token });
+  //         console.log("before")
+  //         let session_payload: any = {
+  //           user_id: user._id,
+  //           device_id: "8765",
+  //           IP_address: "876iuyt76jhg",
+  //           isSessionSctive: true
+  
+  //         }
+  //         console.log("after paylod")
+  //         await SessionModel.insertMany([
+  //           session_payload
+  //         ])
+  //         console.log(user._id)
+  //         console.log("after insertion in session")
+  //         await client.set(`${user._id}_session`, JSON.stringify(session_payload))
+  //         console.log("after stringfy")
+  //         return res.send({ message: "user login Successfully", token: token })
+  //       });
+  //     })
+  //     .catch((err:any) => {
+  //       res.status(500).json({ error: 'Failed to authenticate user' });
+  //     });
+  // };
+  
+  
  
  
     

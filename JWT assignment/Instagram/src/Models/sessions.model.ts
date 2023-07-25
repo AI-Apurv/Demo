@@ -1,29 +1,37 @@
 const mongoose = require('mongoose')
+import {boolean} from 'joi' ;
+import {Schema , model} from 'mongoose'
+
+// interface Session {
+//     user_id : string;
+//     device_id : string ;
+//     status : boolean
+// }
 
 const SessionSchema = new mongoose.Schema({
 
-    session_id : {
-        type : Object
-    },
+    // session_id : {
+    //     type : Object
+    // },
     user_id : {
-        type : Object ,
+        type : String ,
         required: true ,
         ref : 'UserModel'
     },
-    session_duration : {
-        type : Number ,
-        required: true 
+    device_id : {
+        type : String ,
+       // required: true 
     },
 
-    session_start : {
-        type : Date ,
+    status : {
+        type : Boolean ,
         required: true ,
     },
 
-    session_end : {
-        type : Date ,
-        required: true ,
-    }
+    // session_end : {
+    //     type : Date ,
+    //     required: true ,
+    // }
 })
 
 const SessionModel = mongoose.model('SessionModel',SessionSchema)

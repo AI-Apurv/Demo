@@ -8,6 +8,7 @@ import router from './src/routers/authroutes';
 import { swaggerDefinition} from './src/swagger/userSwagger';
 const swaggerJSDoc = require('swagger-jsdoc') 
 const swaggerUi = require('swagger-ui-express')
+import {redFun} from './src/redis/redis.client';
 
 const app = express()
 app.use(express.json())
@@ -17,7 +18,7 @@ const options={
     swaggerDefinition,
     apis: ['./src/swagger/*'],
 };
-  
+redFun();
 const swaggerSpec = swaggerJSDoc(options);
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 //------------------------------------------

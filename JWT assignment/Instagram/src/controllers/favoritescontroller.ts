@@ -1,5 +1,5 @@
-import User from "../models/user.schema";
-import { Post } from "../models/post.schema";
+import { UserModel } from "../Models/user.model";
+import { PostModel } from "../Models/posts.model";
 import Favourites from "../models/favourites.schema";
 import { Verify } from "../middleware/verify.user";
 

@@ -28,6 +28,18 @@ const UserSchema = new mongoose.Schema({
         type : String ,
         required : true ,
     },
+    follower_count : {
+        type : Number ,
+     //   required : true ,
+    },
+    following_count : {
+        type : Number ,
+     //   required : true ,
+    }, 
+    post_count : {
+        type : Number , 
+    //    required : true 
+    },
 
     bio : {
         type : String ,

@@ -12,8 +12,9 @@ const hashtags = new mongoose.Schema({
 const PostSchema = new mongoose.Schema({
    
     user_id : {
-        type : Object ,
-        ref : 'UserModel'
+        type : Number ,
+        ref : 'UserModel',
+        required : true ,
     },
     post_id : {
         type : Object ,

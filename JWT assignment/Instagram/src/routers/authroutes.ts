@@ -10,6 +10,8 @@ router.post('/login', login);
 router.post('/post',createPost);
 router.put('/editPost',editPost)
 router.post('/deletePost',deletePost)
+router.get('/logout',Logout.logout_user);
+
 
 export default router ;
 
